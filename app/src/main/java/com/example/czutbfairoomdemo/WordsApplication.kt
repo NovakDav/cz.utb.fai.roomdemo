@@ -1,9 +1,14 @@
 package com.example.czutbfairoomdemo
 
 import android.app.Application
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class WordsApplication : Application() {
 
-    val database by lazy { WordRoomDatabase.getDatabase(this) }
+    val applicationScope = CoroutineScope(SupervisorJob())
+
+
+    val database by lazy { WordRoomDatabase.getDatabase(this, applicationScope) }
     val repository by lazy { WordRepository(database.wordDao()) }
 }
